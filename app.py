@@ -11,7 +11,8 @@ database_manager.connect()
 #todo_test_object = models.ToDo(id=0, title='test', description='test', deadline=datetime.now(), status='Done')
 # Test Add Todo
 #database_manager.add_todo(todo_test_object)
-#all_todos = database_manager.view_all_todos()
+database_manager.delete_todo(33622889)
+all_todos = database_manager.view_all_todos()
 
 @app.route('/')
 def hello_world():
