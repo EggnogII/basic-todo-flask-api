@@ -69,9 +69,29 @@ class DatabaseManagement:
             self.connection.close()
             return -1
     
+    def update_todo(self, id, Todo):
+        try:
+            self.cursor.execute("UPDATE todos SET title = %s, description = %s, deadline = %s, status = %s WHERE id = %s", (Todo.title, Todo.description, Todo.deadline, Todo.status, id))
+            self.connection.commit()
+        except Exception as e:
+            print(e)
+            self.cursor.close()
+            self.connection.close()
+            return -1
+
     def delete_todo(self, id):
         try:
             self.cursor.execute("DELETE FROM todos WHERE id = %s", (id,))
+            self.connection.commit()
+        except Exception as e:
+            print(e)
+            self.cursor.close()
+            self.connection.close()
+            return -1
+    
+    def delete_all_todos(self):
+        try:
+            self.cursor.execute("DELETE FROM todos")
             self.connection.commit()
         except Exception as e:
             print(e)
