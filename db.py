@@ -68,5 +68,13 @@ class DatabaseManagement:
             self.cursor.close()
             self.connection.close()
             return -1
-        
-
+    
+    def delete_todo(self, id):
+        try:
+            self.cursor.execute("DELETE FROM todos WHERE id = %s", (id,))
+            self.connection.commit()
+        except Exception as e:
+            print(e)
+            self.cursor.close()
+            self.connection.close()
+            return -1
