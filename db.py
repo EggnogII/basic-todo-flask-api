@@ -1,10 +1,17 @@
 import uuid
 import psycopg2
 import json
+import random
 
+"""
 def get_new_id():
     id = uuid.uuid1()
     return id.int
+"""
+
+def get_id():
+    id = random.getrandbits(28)
+    return id
 
 def read_manifest():
     with open('manifest.json') as json_file:
@@ -31,6 +38,25 @@ class DatabaseManagement:
         )
 
         self.cursor = self.connection.cursor()
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS todos (id SERIAL PRIMARY KEY, title TEXT, description TEXT, deadline TIMESTAMP, status TEXT)")
-        self.connection.commit()
+        try:
+            self.cursor.execute("CREATE TABLE IF NOT EXISTS todos (id SERIAL PRIMARY KEY, title TEXT, description TEXT, deadline TIMESTAMP, status TEXT)")
+            self.connection.commit()
+        except Exception as e:
+            print(e)
+            self.cursor.close()
+            self.connection.close()
+            return -1
+        
    
+    def add_todo(self, Todo):
+        id = get_id()
+        try:
+            self.cursor.execute("INSERT INTO todos (id, title, description, deadline, status) VALUES (%s, %s, %s, %s, %s)", (id, Todo.title, Todo.description, Todo.deadline, Todo.status))
+            self.connection.commit()
+        except Exception as e:
+            print(e)
+            self.cursor.close()
+            self.connection.close()
+            return -1
+        
+
