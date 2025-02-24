@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 import models
 import db
 from datetime import datetime
@@ -21,6 +21,21 @@ all_todos = database_manager.view_all_todos()
 @app.route('/')
 def index():
 	return render_template('index.html', todos=all_todos)
+
+@app.route('/add', methods=['POST'])
+def postRequest():
+	title = request.form.get('title')
+	description = request.form.get('description')
+	deadline = request.form.get('deadline')
+	status = request.form.get('status')
+	todo = models.ToDo(id=0, title=title, description=description, deadline=deadline, status=status)
+	print("New TODO: ", todo.serialize())
+	database_manager.add_todo(todo)
+	return jsonify({
+		'res': todo.serialize(),
+		'status': 200,
+		'msg': 'Successfully added todo action'
+	})
 
 if __name__ == '__main__':
 	app.run()
