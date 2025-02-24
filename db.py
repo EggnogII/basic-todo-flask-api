@@ -58,5 +58,15 @@ class DatabaseManagement:
             self.cursor.close()
             self.connection.close()
             return -1
+    
+    def view_all_todos(self):
+        try:
+            self.cursor.execute("SELECT * FROM todos")
+            return self.cursor.fetchall()
+        except Exception as e:
+            print(e)
+            self.cursor.close()
+            self.connection.close()
+            return -1
         
 
