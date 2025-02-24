@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import models
 import db
 from datetime import datetime
@@ -15,12 +15,12 @@ database_manager.connect()
 #database_manager.add_todo(todo_test_object)
 #database_manager.delete_todo(33622889)
 #database_manager.update_todo(230471354, todo_test_object)
-#all_todos = database_manager.view_all_todos()
+all_todos = database_manager.view_all_todos()
 #database_manager.delete_all_todos()
 
 @app.route('/')
-def hello_world():
-	return 'Hello World!'
+def index():
+	return render_template('index.html', todos=all_todos)
 
 if __name__ == '__main__':
 	app.run()
