@@ -41,6 +41,17 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
-      
+    
+    - name: Login to ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
     - name: Build the Docker image
-      run: docker build . --file ./Dockerfile/Dockerfile --tag ${{env.DOCKER_IMAGE_NAME}}:$(date +%s)
+      run: docker build . --file ./Dockerfile/Dockerfile --tag ${{env.DOCKER_IMAGE_NAME}}:${{env.ECR_REPO}}:${{github.sha}}
+
+    - name: Tag the image
+      run: docker tag ${{env.DOCKER_IMAGE_NAME}}:${{env.ECR_REPO}}:${{github.sha}} \
+        ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+
+    - name: Push the image to ECR
+      run: docker push ${{steps.login-ecr.outputs.registry}}/${{env.ECR_REPO}}:${{github.sha}}
