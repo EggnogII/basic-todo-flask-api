@@ -22,20 +22,34 @@
             <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full">Add Task</button>
         </form>
         
-        <ul id="todoList">
-            {% for todo in todos %}
-                <li class="border-b p-2 flex justify-between items-center">
-                    <div>
-                        <strong>{{ todo.title }}</strong> - {{ todo.description }}
-                        <span class="text-gray-500 text-sm">(Due: {{ todo.deadline }})</span>
-                    </div>
-                    <span class="text-xs px-2 py-1 rounded bg-gray-200">{{ todo.status }}</span>
-                </li>
-            {% endfor %}
-        </ul>
+        <ul id="todoList"></ul>
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/request")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        const todoList = document.getElementById("todoList");
+                        todoList.innerHTML = ""; // Clear existing list
+                        
+                        data.res.forEach(todo => {
+                            const li = document.createElement("li");
+                            li.className = "border-b p-2 flex flex-col";
+                            li.innerHTML = `
+                                <div class="font-bold">${todo.title ? todo.title : "Untitled"}</div>
+                                <div class="text-gray-700">${todo.description ? todo.description : "No Description"}</div>
+                                <span class="text-gray-500 text-sm">(Due: ${todo.deadline ? todo.deadline : "No Deadline"})</span>
+                                <span class="text-xs px-2 py-1 rounded bg-gray-200">${todo.status ? todo.status : "No Status"}</span>
+                            `;
+                            todoList.appendChild(li);
+                        });
+                    }
+                })
+                .catch(error => console.error("Error fetching todos:", error));
+        });
+
         document.getElementById("todoForm").addEventListener("submit", function(event) {
             event.preventDefault();
             const formData = new FormData(this);
