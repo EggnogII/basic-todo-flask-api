@@ -21,3 +21,20 @@ So securely echo the contents into a JSON file here (using secure strings), and 
     "db_password": "****"
 }
 ```
+
+## Infrastructure
+
+* GitHub Actions, and GitHub in general doesn't really deal with Terraform State, so my considerations are
+    * Run the Terraform locally and manage the state locally
+    * Encrypt and Decrypt the State file in the git repository (storing TF state in the git repository is a bad practice and want to avoid)
+    * Store the TF State in AWS (probably a better move in general, this isn't Azure DevOps Server or Gitlab where we have better options for that)
+
+* Leaning towards local management, for the purposes of how fast the turnaround time is right now. Bad overall for collaboration, but since its just me this is acceptable.
+
+### Database
+
+* Opted to use RDS with AWS so that we aren't keeping a database running on the Docker image. Sure we could do that for simplicity, but if I were working locally I'd just use SQLite instead or Postgres options.
+
+* My last company used Postgres and MSSQL quite extensively. Only considerations is IAM permissions between the ECS service the DB, and making sure the manifest has that information before deployment (using pipeline variable to hide true values)
+
+
