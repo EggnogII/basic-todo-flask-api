@@ -80,7 +80,8 @@ def putRequest():
 			})
 	return jsonify({
 		'error': 'No todo found',
-		'status': 404
+		'status': 404,
+		'res': None
 	})
 
 @app.route('/request/<id>', methods=['DELETE'])
@@ -95,7 +96,8 @@ def deleteRequest(id):
 			})
 	return jsonify({
 		'error': 'No todo found',
-		'status': 404
+		'status': 404,
+		'res': None
 	})
 
 if __name__ == '__main__':
