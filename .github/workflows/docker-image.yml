@@ -30,7 +30,8 @@ jobs:
           }' > manifest.json
       shell: bash
     - name: Print manifest
-      run: cat manifest.json
+      run: cat manifest.json;ls -al
+      shell: bash
       
     #- name: Build the Docker image
     #  run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
