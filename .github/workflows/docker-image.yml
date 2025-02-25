@@ -7,7 +7,7 @@ on:
 # Want to likely use OIDC in the future
 env:
   DOCKER_IMAGE_NAME: adobe-flask-web-api
-  ECR_REPO: eggnog/docker
+  ECR_REPO: eggnog-docker
   AWS_REGION: us-west-1
 
 jobs:
