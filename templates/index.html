@@ -38,6 +38,7 @@
                             const li = document.createElement("li");
                             li.className = "border-b p-2 flex flex-col";
                             li.innerHTML = `
+                                <div class="font-bold">ID: ${todo.id ? todo.id : "N/A"}</div>
                                 <div class="font-bold">${todo.title ? todo.title : "Untitled"}</div>
                                 <div class="text-gray-700">${todo.description ? todo.description : "No Description"}</div>
                                 <span class="text-gray-500 text-sm">(Due: ${todo.deadline ? todo.deadline : "No Deadline"})</span>
