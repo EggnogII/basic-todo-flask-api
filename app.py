@@ -63,5 +63,21 @@ def getRequest():
 			'number_of_todos': len(todos)
 		})
 
+@app.route('/request', methods=['PUT'])
+def putRequest():
+	id = request.form.get('id')
+	for todo in database_manager.view_all_todos():
+		if (todo.id == int(id)):
+			title = request.form.get('title')
+			description = request.form.get('description')
+			deadline = request.form.get('deadline')
+			status = request.form.get('status')
+			database_manager.update_todo(int(id), models.ToDo(id=int(id), title=title, description=description, deadline=deadline, status=status))
+			return jsonify({
+				'res': todo.serialize(),
+				'status': 200,
+				'msg': 'Successfully added todo action'
+			})
+
 if __name__ == '__main__':
 	app.run()
