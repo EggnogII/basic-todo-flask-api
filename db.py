@@ -53,7 +53,10 @@ class DatabaseManagement:
     def add_todo(self, Todo):
         id = get_id()
         try:
-            self.cursor.execute("INSERT INTO todos (id, title, description, deadline, status) VALUES (%s, %s, %s, %s, %s)", (id, Todo.title, Todo.description, Todo.deadline, Todo.status))
+            if Todo.id == 0:
+                self.cursor.execute("INSERT INTO todos (id, title, description, deadline, status) VALUES (%s, %s, %s, %s, %s)", (id, Todo.title, Todo.description, Todo.deadline, Todo.status))
+            else:
+                self.cursor.execute("INSERT INTO todos (id, title, description, deadline, status) VALUES (%s, %s, %s, %s, %s)", (Todo.id, Todo.title, Todo.description, Todo.deadline, Todo.status))
             self.connection.commit()
         except Exception as e:
             print(e)
