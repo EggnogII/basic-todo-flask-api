@@ -37,5 +37,31 @@ def postRequest():
 		'msg': 'Successfully added todo action'
 	})
 
+@app.route('/request', methods=['GET'])
+def getRequest():
+	content_type = request.headers.get('Content-Type')
+	todos = [t.serialize() for t in database_manager.view_all_todos()]
+	if (content_type == 'application/json'):
+		json = request.json
+		for t in todos:
+			if (t['id'] == int(json['id'])):
+				return jsonify({
+					'res': t,
+					'status': 200,
+					'msg': 'Successfully got todo action'
+				})
+		return jsonify({
+			'error': 'No todo found',
+			'status': 404,
+			'res': None
+		})
+	else:
+		return jsonify({
+			'res': todos,
+			'status': 200,
+			'msg': 'Successfully got all todo actions',
+			'number_of_todos': len(todos)
+		})
+
 if __name__ == '__main__':
 	app.run()
