@@ -13,13 +13,16 @@
         <label class="block mb-2">
             <input type="checkbox" id="updateToggle" class="mr-2"> Update existing Todo
         </label>
+        <label class="block mb-2">
+            <input type="checkbox" id="deleteToggle" class="mr-2"> Delete Todo
+        </label>
         
         <form id="todoForm" class="mb-4">
             <input type="number" name="id" id="todoId" placeholder="ID" class="border p-2 w-full mb-2" disabled>
-            <input type="text" name="title" placeholder="Title" class="border p-2 w-full mb-2" required>
-            <input type="text" name="description" placeholder="Description" class="border p-2 w-full mb-2" required>
-            <input type="datetime-local" name="deadline" class="border p-2 w-full mb-2" required>
-            <select name="status" class="border p-2 w-full mb-2">
+            <input type="text" name="title" id="todoTitle" placeholder="Title" class="border p-2 w-full mb-2" required>
+            <input type="text" name="description" id="todoDescription" placeholder="Description" class="border p-2 w-full mb-2" required>
+            <input type="datetime-local" name="deadline" id="todoDeadline" class="border p-2 w-full mb-2" required>
+            <select name="status" id="todoStatus" class="border p-2 w-full mb-2">
                 <option value="pending">Pending</option>
                 <option value="in progress">In Progress</option>
                 <option value="completed">Completed</option>
@@ -34,6 +37,15 @@
         document.getElementById("updateToggle").addEventListener("change", function() {
             const idField = document.getElementById("todoId");
             idField.disabled = !this.checked;
+        });
+
+        document.getElementById("deleteToggle").addEventListener("change", function() {
+            const isDeleting = this.checked;
+            document.getElementById("todoId").disabled = !isDeleting;
+            document.getElementById("todoTitle").disabled = isDeleting;
+            document.getElementById("todoDescription").disabled = isDeleting;
+            document.getElementById("todoDeadline").disabled = isDeleting;
+            document.getElementById("todoStatus").disabled = isDeleting;
         });
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -65,12 +77,21 @@
             event.preventDefault();
             const formData = new FormData(this);
             const isUpdate = document.getElementById("updateToggle").checked;
-            const url = isUpdate ? "/request" : "/add";
-            const method = isUpdate ? "PUT" : "POST";
+            const isDelete = document.getElementById("deleteToggle").checked;
+            let url = "/add";
+            let method = "POST";
+            
+            if (isUpdate) {
+                url = "/request";
+                method = "PUT";
+            } else if (isDelete) {
+                url = `/request/${document.getElementById("todoId").value}`;
+                method = "DELETE";
+            }
             
             fetch(url, {
                 method: method,
-                body: formData
+                body: isDelete ? null : formData
             })
             .then(response => response.json())
             .then(data => {
