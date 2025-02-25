@@ -2,6 +2,8 @@ import uuid
 import psycopg2
 import json
 import random
+from models import ToDo
+
 
 """
 def get_new_id():
@@ -51,7 +53,10 @@ class DatabaseManagement:
     def add_todo(self, Todo):
         id = get_id()
         try:
-            self.cursor.execute("INSERT INTO todos (id, title, description, deadline, status) VALUES (%s, %s, %s, %s, %s)", (id, Todo.title, Todo.description, Todo.deadline, Todo.status))
+            if Todo.id == 0:
+                self.cursor.execute("INSERT INTO todos (id, title, description, deadline, status) VALUES (%s, %s, %s, %s, %s)", (id, Todo.title, Todo.description, Todo.deadline, Todo.status))
+            else:
+                self.cursor.execute("INSERT INTO todos (id, title, description, deadline, status) VALUES (%s, %s, %s, %s, %s)", (Todo.id, Todo.title, Todo.description, Todo.deadline, Todo.status))
             self.connection.commit()
         except Exception as e:
             print(e)
@@ -62,12 +67,13 @@ class DatabaseManagement:
     def view_all_todos(self):
         try:
             self.cursor.execute("SELECT * FROM todos")
-            return self.cursor.fetchall()
+            todos = self.cursor.fetchall()
+            return [ToDo(id=t[0], title=t[1], description=t[2], deadline=t[3], status=t[4]) for t in todos]
         except Exception as e:
             print(e)
             self.cursor.close()
             self.connection.close()
-            return -1
+            return []
     
     def update_todo(self, id, Todo):
         try:

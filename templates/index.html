@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow-md">
+        <h1 class="text-2xl font-bold mb-4">Todo List</h1>
+        
+        <label class="block mb-2">
+            <input type="checkbox" id="updateToggle" class="mr-2"> Update existing Todo
+        </label>
+        
+        <form id="todoForm" class="mb-4">
+            <input type="number" name="id" id="todoId" placeholder="ID" class="border p-2 w-full mb-2" disabled>
+            <input type="text" name="title" placeholder="Title" class="border p-2 w-full mb-2" required>
+            <input type="text" name="description" placeholder="Description" class="border p-2 w-full mb-2" required>
+            <input type="datetime-local" name="deadline" class="border p-2 w-full mb-2" required>
+            <select name="status" class="border p-2 w-full mb-2">
+                <option value="pending">Pending</option>
+                <option value="in progress">In Progress</option>
+                <option value="completed">Completed</option>
+            </select>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded w-full">Submit Task</button>
+        </form>
+        
+        <ul id="todoList"></ul>
+    </div>
+
+    <script>
+        document.getElementById("updateToggle").addEventListener("change", function() {
+            const idField = document.getElementById("todoId");
+            idField.disabled = !this.checked;
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/request")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        const todoList = document.getElementById("todoList");
+                        todoList.innerHTML = ""; // Clear existing list
+                        
+                        data.res.forEach(todo => {
+                            const li = document.createElement("li");
+                            li.className = "border-b p-2 flex flex-col";
+                            li.innerHTML = `
+                                <div class="font-bold">ID: ${todo.id ? todo.id : "N/A"}</div>
+                                <div class="font-bold">${todo.title ? todo.title : "Untitled"}</div>
+                                <div class="text-gray-700">${todo.description ? todo.description : "No Description"}</div>
+                                <span class="text-gray-500 text-sm">(Due: ${todo.deadline ? todo.deadline : "No Deadline"})</span>
+                                <span class="text-xs px-2 py-1 rounded bg-gray-200">${todo.status ? todo.status : "No Status"}</span>
+                            `;
+                            todoList.appendChild(li);
+                        });
+                    }
+                })
+                .catch(error => console.error("Error fetching todos:", error));
+        });
+
+        document.getElementById("todoForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const isUpdate = document.getElementById("updateToggle").checked;
+            const url = isUpdate ? "/request" : "/add";
+            const method = isUpdate ? "PUT" : "POST";
+            
+            fetch(url, {
+                method: method,
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Success:", data);
+                location.reload(); // Refresh the page to show the updated task
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
