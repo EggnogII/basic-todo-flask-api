@@ -5,7 +5,7 @@ on:
     branches: [ "development" ]
 
 env:
-  DOCKER_IMAGE_NAME: my-docker-image
+  DOCKER_IMAGE_NAME: adobe-flask-web-api
   DOCKER_REGISTRY: docker.io
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -30,10 +30,10 @@ jobs:
             "db_password": "${{ secrets.DB_PASSWORD }}"
           }' > manifest.json
       shell: bash
-      
+
     - name: Print manifest
       run: cat manifest.json;ls -al
       shell: bash
       
-    #- name: Build the Docker image
-    #  run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build the Docker image
+      run: docker build . --file ./Dockerfile/Dockerfile --tag ${{env.DOCKER_IMAGE_NAME}}:$(date +%s)
