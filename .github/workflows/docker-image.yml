@@ -22,7 +22,7 @@ jobs:
     - name: Create JSON manifest
       run: |
           echo '{
-            "database_server_host": "localhost",
+            "database_server_host": "${{ secrets.DATABASE_SERVER_HOST }}",
             "database_server_port": "5432",
             "database": "postgres",
             "db_user": "postgres",
