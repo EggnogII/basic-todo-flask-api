@@ -1,4 +1,4 @@
-FROM: python:slim
+FROM python:slim
 
 WORKDIR /home/basic-todo-flask-api
 
