@@ -78,6 +78,25 @@ def putRequest():
 				'status': 200,
 				'msg': 'Successfully added todo action'
 			})
+	return jsonify({
+		'error': 'No todo found',
+		'status': 404
+	})
+
+@app.route('/request/<id>', methods=['DELETE'])
+def deleteRequest(id):
+	for todo in database_manager.view_all_todos():
+		if (todo.id == int(id)):
+			database_manager.delete_todo(int(id))
+			return jsonify({
+				'res': todo.serialize(),
+				'status': 200,
+				'msg': 'Successfully deleted todo action'
+			})
+	return jsonify({
+		'error': 'No todo found',
+		'status': 404
+	})
 
 if __name__ == '__main__':
 	app.run()
