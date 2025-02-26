@@ -100,12 +100,9 @@ def deleteRequest(id):
 		'res': None
 	})
 
-@app.route('/health')
+@app.route('/health', methods=['GET'])
 def health_check():
-	return jsonify({
-		'status': 200,
-		'msg': 'Healthy'
-	})
+	return jsonify({'status': 'healthy'}), 200
 
 if __name__ == '__main__':
 	app.run(port=80)
