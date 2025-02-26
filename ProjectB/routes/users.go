@@ -9,7 +9,7 @@ import (
 
 func signup(context *gin.Context) {
 	var user models.User
-	err := context.BindJson(&user)
+	err := context.BindJSON(&user)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse request data"})
 		return
