@@ -63,7 +63,7 @@ We are using GitHub Actions to create and publish the Dockerimage to ECR. We nee
 Order of Operations are as follows:
 
 1) Create RDS Postgres Infrastructure from `/terraform/rds-for-adobe`
-2) Publish the Docker Image to ECR using GitHub Actions
+2) Publish the Docker Image to ECR using GitHub Actions (automated trigger on development branch)
 3) Create the ECS Infrastructure after getting publishing the latest infrastructure.
 
 ### Limitations
