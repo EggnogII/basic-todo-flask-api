@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "adobe_flask_ecs_task_definition" {
     network_mode = "awsvpc"
     requires_compatibilities = ["FARGATE"]
     cpu = 2048
-    memory = 8192
+    memory = 4096
     execution_role_arn = aws_iam_role.adobe_flask_ecs_iam_role.arn
 
     container_definitions = jsonencode([
@@ -37,7 +37,7 @@ resource "aws_ecs_task_definition" "adobe_flask_ecs_task_definition" {
             name = "adobe-flask"
             image = "887712174622.dkr.ecr.us-west-1.amazonaws.com/eggnog-docker:adobe-flask-web-api-latest" # Change to var later
             cpu = 2048
-            memory = 8192
+            memory = 4096
             essential = true
             portMappings = [
                 {
