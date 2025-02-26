@@ -170,3 +170,17 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 manifest.json
+terraform/rds-for-adobe/.terraform.lock.hcl
+terraform/rds-for-adobe/notes.txt
+terraform/rds-for-adobe/terraform.tfstate
+terraform/rds-for-adobe/terraform.tfstate.backup
+terraform/rds-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws/5.88.0/windows_amd64/LICENSE.txt
+terraform/rds-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws/5.88.0/windows_amd64/terraform-provider-aws_v5.88.0_x5.exe
+terraform/rds-for-adobe/config/dev.tfvars
+terraform/ecs-for-adobe/.terraform.lock.hcl
+terraform/ecs-for-adobe/terraform.tfstate
+terraform/ecs-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws/5.88.0/windows_amd64/LICENSE.txt
+terraform/ecs-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws/5.88.0/windows_amd64/terraform-provider-aws_v5.88.0_x5.exe
+terraform/ecs-for-adobe/config/dev.tfvars
+terraform/ecs-for-adobe/terraform.tfstate.backup
+terraform/ecs-for-adobe/.terraform.tfstate.lock.info
