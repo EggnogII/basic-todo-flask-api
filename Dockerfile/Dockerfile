@@ -11,6 +11,7 @@ RUN venv/bin/pip install gunicorn
 
 COPY . .
 
+EXPOSE 80
 RUN chmod +x entrypoint.sh
 
 CMD ["./entrypoint.sh"]
