@@ -99,3 +99,8 @@ resource "aws_ecs_service" "adobe_flask_ecs_service" {
       container_port = 80
     }
 }
+
+resource "aws_cloudwatch_log_group" "adobe_flask_log_group" {
+  name = "/ecs/adobe-flask"
+  retention_in_days = 7  # Adjust as needed
+}
