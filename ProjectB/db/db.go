@@ -41,4 +41,22 @@ func InitDB() {
 	DB.SetMaxOpenConns(10)
 	DB.SetMaxIdleConns(5)
 
+	// Here is where we create tables
+	createTables()
+}
+
+func createTables() {
+	createUsersTable := `
+	CREATE TABLE IF NOT EXISTS users (
+	 id SERIAL PRIMARY KEY,
+	 email TEXT NOT NULL UNIQUE,
+	 password TEXT NOT NULL
+	 )
+	 `
+	_, err := DB.Exec(createUsersTable)
+
+	if err != nil {
+		fmt.Print(err)
+		panic("Could not create users table")
+	}
 }
