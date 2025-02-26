@@ -37,6 +37,12 @@ resource "aws_ecs_task_definition" "adobe_flask_ecs_task_definition" {
             name = "adobe-flask"
             image = "887712174622.dkr.ecr.us-west-1.amazonaws.com/eggnog-docker:adobe-flask-web-api-latest" # Change to var later
             essential = true
+            portMappings = [
+                {
+                    containerPort = 80
+                    hostPort = 80
+                }
+            ]
             environment = [
                 {
                     name = "DB_HOST"
