@@ -10,15 +10,8 @@ import (
 )
 
 func createEvent(context *gin.Context) {
-	token := context.Request.Header.Get("Authorization")
-	if token == "" {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized"})
-		return
-	}
-
-	userId, err := tools.VerifyToken(token)
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized"})
+	userId, err, shouldReturn := authenticateToken(context)
+	if shouldReturn {
 		return
 	}
 
@@ -38,6 +31,21 @@ func createEvent(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusCreated, gin.H{"message": "Event created", "event": event})
+}
+
+func authenticateToken(context *gin.Context) (int64, error, bool) {
+	token := context.Request.Header.Get("Authorization")
+	if token == "" {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized"})
+		return 0, nil, true
+	}
+
+	userId, err := tools.VerifyToken(token)
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorized"})
+		return 0, nil, true
+	}
+	return userId, err, false
 }
 
 func getEvents(context *gin.Context) {
@@ -65,6 +73,11 @@ func getEvent(context *gin.Context) {
 }
 
 func updateEvent(context *gin.Context) {
+	_, _, shouldReturn := authenticateToken(context)
+	if shouldReturn {
+		return
+	}
+
 	eventId, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse event with supplied ID"})
