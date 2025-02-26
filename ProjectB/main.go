@@ -1,15 +1,12 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"www.example.com/rest-api-proj/db"
 	"www.example.com/rest-api-proj/routes"
 )
 
 func main() {
-	fmt.Println("Dummy Printline while I figure stuff out")
 	db.InitDB()
 	/*
 
