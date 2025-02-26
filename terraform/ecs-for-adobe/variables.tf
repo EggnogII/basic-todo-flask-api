@@ -2,10 +2,6 @@ variable "rds_cluster_password" {
   type = string
 }
 
-variable "rds_endpoint" {
-  type = string
-}
-
 variable "rds_instance" {
   type = string
 }
