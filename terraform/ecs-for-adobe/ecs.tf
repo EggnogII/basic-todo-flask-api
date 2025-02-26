@@ -40,15 +40,15 @@ resource "aws_ecs_task_definition" "adobe_flask_ecs_task_definition" {
             environment = [
                 {
                     name = "DB_HOST"
-                    value = "adobe-aurora-postgres-instance-0.czweoiicy1o6.us-west-1.rds.amazonaws.com" # Change to var later
+                    value = var.rds_endpoint
                 },
                 {
                     name = "DB_NAME"
-                    value = "adobe" # Change to var later
+                    value = var.db_name 
                 },
                 {
                     name = "DB_USER"
-                    value = "postgres_adobe"
+                    value = var.db_user
                 },
                 {
                     name = "DB_PASSWORD"
