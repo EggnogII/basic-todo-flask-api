@@ -35,7 +35,7 @@ resource "aws_ecs_task_definition" "adobe_flask_ecs_task_definition" {
     container_definitions = jsonencode([
         {
             name = "adobe-flask"
-            image = "887712174622.dkr.ecr.us-west-1.amazonaws.com/eggnog-docker:adobe-flask-web-api-857e03a76d2b06ace7fd15e076ea197c88de3fd8" # Change to var later
+            image = "887712174622.dkr.ecr.us-west-1.amazonaws.com/eggnog-docker:adobe-flask-web-api-latest" # Change to var later
             essential = true
             environment = [
                 {
