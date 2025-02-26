@@ -76,6 +76,6 @@ resource "aws_ecs_service" "adobe_flask_ecs_service" {
 
     network_configuration {
         subnets = ["subnet-071a616244276d1ad", "subnet-0423370b6425be19c"]
-        security_groups =[""]
+        security_groups =[aws_security_group.ecs_sg.id]
     }
 }
