@@ -60,11 +60,22 @@ So securely echo the contents into a JSON file here (using secure strings), and 
 
 We are using GitHub Actions to create and publish the Dockerimage to ECR. We need to create the proper manifest which includes information on what RDS to connect to, with what credentials (these are injected as masked secrets). So before we do that we need to deploy the RDS infrastructure.
 
+Prerequisites:
+
+* Authentication to AWS on your system or target CI system in the form of Access and Secret keys
+* Terraform on your system or target CI system
+
 Order of Operations are as follows:
 
-1) Create RDS Postgres Infrastructure from `/terraform/rds-for-adobe`
-2) Publish the Docker Image to ECR using GitHub Actions (automated trigger on development branch)
-3) Create the ECS Infrastructure after getting publishing the latest infrastructure.
+1) Update the TFVars for RDS, and create RDS Postgres Infrastructure from `/terraform/rds-for-adobe`
+  * Take the output DNS name for the RDS instance and put it into the GitHub Actions.
+  * There are other secrets to input as well such as the `AWS_SECRET_ACCESS_KEY`, `AWS_SECRET_ACCESS_KEY_ID`, `DATABASE_SERVER_HOST`, `DATABASE_SERVER_PORT` (Usually `5432`), `DB_USER` and the `DB_PASSWORD`.
+     * Most of these should come from the TFVars setup for RDS.
+2) Publish the Docker Image to ECR using GitHub Actions
+  * This should happen after you commit if your branch is `development`. It is an automated trigger.
+3) Update the TFVars file for ECS, and create the ECS Infrastructure from `/terraform/ecs-for-adobe`
+  * The final output should be the ALB DNS which you can paste into the browser.
+  * If there are issues, then we need to investigate the health check using either the AWS CLI, or the Web Console.
 
 ### Limitations
 
@@ -76,11 +87,14 @@ Order of Operations are as follows:
 #### Example TFVars for ECS
 
 ```
-rds_cluster_password="***"
-rds_endpoint="adobe-aurora-postgres-instance-0.**********.us-west-1.rds.amazonaws.com"
-db_name="********"
-db_user="****"
-vpc_id="vpc-*******"
+rds_cluster_password="******************************"
+rds_instance="adobe-aurora-postgres-instance-0"
+db_name="******************************"
+db_user="******************************"
+vpc_id="vpc="******************************"
+subnet_id_b="subnet-="******************************"
+subnet_id_c="subnet-="******************************"
+ecr_image_uri="******************************"
 ```
 
 #### Example TFVars for RDS
