@@ -83,3 +83,14 @@ db_user="****"
 vpc_id="vpc-*******"
 ```
 
+#### Example TFVars for RDS
+
+```
+rds_cluster_password="***"
+db_name="***"
+db_user="***"
+vpc_id="vpc-***"
+instance_type="db.r7i.large"
+subnet_id_b="subnet-***"
+subnet_id_c="subnet-***" 
+```
