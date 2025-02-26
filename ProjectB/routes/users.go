@@ -18,7 +18,8 @@ func signup(context *gin.Context) {
 
 	err = user.Save()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not create user"})
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not create user, Email may already be in use."})
+		return
 	}
 	context.JSON(http.StatusCreated, gin.H{"message": "User created", "user": user})
 }

@@ -36,3 +36,65 @@ func (e *Event) Save() error {
 
 	return nil
 }
+
+func GetAllEvents() ([]Event, error) {
+	query := "SELECT * FROM events"
+	rows, rows_err := db.DB.Query(query)
+	if rows_err != nil {
+		return nil, rows_err
+	}
+	defer rows.Close()
+
+	var events []Event
+	for rows.Next() {
+		var event Event
+		scan_err := rows.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserID)
+
+		if scan_err != nil {
+			return nil, scan_err
+		}
+		events = append(events, event)
+	}
+
+	return events, nil
+
+}
+
+func GetEventByID(id int64) (*Event, error) {
+	query := "SELECT * FROM events WHERE id = $1"
+	row := db.DB.QueryRow(query, id)
+	var event Event
+	scan_err := row.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserID)
+	if scan_err != nil {
+		return nil, scan_err
+	}
+	return &event, nil
+}
+
+func (event Event) Update() error {
+	query := `
+	UPDATE events
+	SET name = $2, description = $3, location = $4, datetime = $5
+	WHERE id = $1
+	`
+
+	statement, err := db.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	_, err = statement.Exec(event.ID, event.Name, event.Description, event.Location, event.DateTime)
+	return err
+}
+
+func (event Event) Delete() error {
+	query := "DELETE FROM events WHERE id = $1"
+	statement, err := db.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+	_, err = statement.Exec(event.ID)
+	return err
+}
