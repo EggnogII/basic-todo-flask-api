@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "adobe_flask_ecs_task_definition" {
     network_mode = "awsvpc"
     requires_compatibilities = ["FARGATE"]
     cpu = 1024
-    memory = 2048
+    memory = 4096
     execution_role_arn = aws_iam_role.adobe_flask_ecs_iam_role.arn
 
     container_definitions = jsonencode([
