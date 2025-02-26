@@ -1,7 +1,7 @@
 resource "aws_security_group" "ecs_sg" {
     name = "ecs-sg"
     description = "Allow ECS tasks to comminicate with RDS"
-    vpc_id = "vpc-096851120f324fbf5" # Change to var later
+    vpc_id = var.vpc_id # Change to var later
 
     ingress {
         from_port = 80
@@ -20,7 +20,7 @@ resource "aws_security_group" "ecs_sg" {
 resource "aws_security_group" "rds_sg" {
     name = "rds-sg"
     description = "Allow ECS tasks to access RDS"
-    vpc_id = "vpc-096851120f324fbf5"
+    vpc_id = var.vpc_id
 
     ingress {
         from_port = 5432
@@ -33,7 +33,7 @@ resource "aws_security_group" "rds_sg" {
 resource "aws_security_group" "alb_sg" {
     name = "alb-sg"
     description = "Allow inbound HTTP traffic"
-    vpc_id = "vpc-096851120f324fbf5"
+    vpc_id = var.vpc_id
 
     ingress {
         from_port = 80

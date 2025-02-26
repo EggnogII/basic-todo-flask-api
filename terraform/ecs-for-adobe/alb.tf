@@ -10,7 +10,7 @@ resource "aws_lb_target_group" "adobe_flask_tg" {
     name = "adobe-flask-tg"
     port = 80
     protocol = "HTTP"
-    vpc_id = "vpc-096851120f324fbf5"
+    vpc_id = var.vpc_id
     health_check {
         path = "/"
     }
