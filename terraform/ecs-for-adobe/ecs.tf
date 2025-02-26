@@ -35,7 +35,7 @@ resource "aws_ecs_task_definition" "adobe_flask_ecs_task_definition" {
   container_definitions = jsonencode([
     {
       name      = "adobe-flask"
-      image     = "887712174622.dkr.ecr.us-west-1.amazonaws.com/eggnog-docker:adobe-flask-web-api-latest" # Change to var later
+      image     = var.ecr_image_uri
       cpu       = 2048
       memory    = 4096
       essential = true
@@ -48,7 +48,7 @@ resource "aws_ecs_task_definition" "adobe_flask_ecs_task_definition" {
       environment = [
         {
           name  = "DB_HOST"
-          value = var.rds_endpoint
+          value = data.aws_db_instance.aurora_postgres_instance.endpoint
         },
         {
           name  = "DB_NAME"
@@ -90,7 +90,7 @@ resource "aws_ecs_service" "adobe_flask_ecs_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = ["subnet-071a616244276d1ad", "subnet-0423370b6425be19c"]
+    subnets          = [var.subnet_id_b, var.subnet_id_c]
     security_groups  = [aws_security_group.ecs_sg.id]
     assign_public_ip = true
   }
@@ -104,5 +104,5 @@ resource "aws_ecs_service" "adobe_flask_ecs_service" {
 
 resource "aws_cloudwatch_log_group" "adobe_flask_log_group" {
   name              = "/ecs/adobe-flask"
-  retention_in_days = 7 # Adjust as needed
+  retention_in_days = 7
 }

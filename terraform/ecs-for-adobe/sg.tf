@@ -1,7 +1,7 @@
 resource "aws_security_group" "ecs_sg" {
   name        = "ecs-sg"
   description = "Allow ECS tasks to comminicate with RDS"
-  vpc_id      = var.vpc_id # Change to var later
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port       = 80

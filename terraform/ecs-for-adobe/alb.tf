@@ -3,7 +3,7 @@ resource "aws_lb" "adobe_flask_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = ["subnet-071a616244276d1ad", "subnet-0423370b6425be19c"]
+  subnets            = [var.subnet_id_b, var.subnet_id_c]
 }
 
 resource "aws_lb_target_group" "adobe_flask_tg" {
