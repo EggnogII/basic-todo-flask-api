@@ -3,7 +3,11 @@ __pycache__/
 *.pyo
 *.log
 venv/
+venv
 node_modules/
 db.sqlite3
 terraform/
 .git/
+.terraform
+node_modules
+*.log
