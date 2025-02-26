@@ -2,15 +2,31 @@ FROM python:slim
 
 WORKDIR /home/basic-todo-flask-api
 
-COPY requirements.txt requirements.txt
-RUN apt-get -y update; apt-get -y upgrade
-RUN apt-get -y install build-essential libpq-dev
-RUN python -m venv venv
-RUN venv/bin/pip install -r requirements.txt
-RUN venv/bin/pip install gunicorn
+# Install necessary dependencies
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends build-essential libpq-dev curl && \
+    rm -rf /var/lib/apt/lists/*
 
+# Copy only requirements first for better caching
+COPY requirements.txt .
+
+# Create virtual environment & install dependencies
+RUN python -m venv venv && \
+    venv/bin/pip install --no-cache-dir --upgrade pip && \
+    venv/bin/pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application
 COPY . .
 
+# Ensure entrypoint script is executable
 RUN chmod +x entrypoint.sh
 
-CMD ["./entrypoint.sh"]
+# Expose necessary ports
+EXPOSE 80 5432
+
+# Add health check
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
+    CMD curl -f http://localhost:80/health || exit 1
+
+# Use entrypoint for better signal handling in ECS
+ENTRYPOINT ["bash", "./entrypoint.sh"]
