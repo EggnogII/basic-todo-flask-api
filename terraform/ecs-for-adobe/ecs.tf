@@ -77,5 +77,12 @@ resource "aws_ecs_service" "adobe_flask_ecs_service" {
     network_configuration {
         subnets = ["subnet-071a616244276d1ad", "subnet-0423370b6425be19c"]
         security_groups =[aws_security_group.ecs_sg.id]
+        assign_public_ip = true
+    }
+
+    load_balancer {
+      target_group_arn = aws_lb_target_group.adobe_flask_tg.arn
+      container_name = "adobe-flask"
+      container_port = 80
     }
 }
