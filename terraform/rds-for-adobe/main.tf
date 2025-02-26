@@ -16,7 +16,7 @@ data "aws_subnet" "subnet_c" {
 }
 
 resource "aws_db_subnet_group" "aurora_subnet_group" {
-    name = "my-aurora-subnet-group"
+    name = "adobe-aurora-subnet-group"
     subnet_ids = [data.aws_subnet.subnet_b.id, data.aws_subnet.subnet_c.id]
 }
 
