@@ -184,3 +184,4 @@ terraform/ecs-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws
 terraform/ecs-for-adobe/config/dev.tfvars
 terraform/ecs-for-adobe/terraform.tfstate.backup
 terraform/ecs-for-adobe/.terraform.tfstate.lock.info
+terraform/rds-for-adobe/.terraform.tfstate.lock.info
