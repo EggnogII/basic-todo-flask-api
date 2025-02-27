@@ -1,0 +1,45 @@
+PS C:\Users\EggnogMkIII\source\python\flask-app-git\basic-todo-flask-api\terraform\rds-for-adobe> hey -n 100 -c 10 http://localhost:8080/events
+
+Summary:
+  Total:        0.0770 secs
+  Slowest:      0.0750 secs
+  Fastest:      0.0002 secs
+  Average:      0.0060 secs
+  Requests/sec: 1298.2124
+
+  Total data:   8130 bytes
+  Size/request: 81 bytes
+
+Response time histogram:
+  0.000 [1]     |
+  0.008 [89]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.015 [1]     |
+  0.023 [0]     |
+  0.030 [0]     |
+  0.038 [0]     |
+  0.045 [0]     |
+  0.053 [1]     |
+  0.060 [2]     |■
+  0.068 [3]     |■
+  0.075 [3]     |■
+
+
+Latency distribution:
+  10% in 0.0002 secs
+  25% in 0.0002 secs
+  50% in 0.0002 secs
+  75% in 0.0003 secs
+  90% in 0.0136 secs
+  95% in 0.0632 secs
+  99% in 0.0750 secs
+
+Details (average, fastest, slowest):
+  DNS+dialup:   0.0012 secs, 0.0002 secs, 0.0750 secs
+  DNS-lookup:   0.0010 secs, 0.0000 secs, 0.0106 secs
+  req write:    0.0000 secs, 0.0000 secs, 0.0001 secs
+  resp wait:    0.0047 secs, 0.0001 secs, 0.0631 secs
+  resp read:    0.0000 secs, 0.0000 secs, 0.0001 secs
+
+Status code distribution:
+  [200] 10 responses
+  [429] 90 responses
