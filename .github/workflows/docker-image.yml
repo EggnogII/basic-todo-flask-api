@@ -29,10 +29,12 @@ jobs:
             "db_user": "${{ secrets.DB_USER }}",
             "db_password": "${{ secrets.DB_PASSWORD }}"
           }' > manifest.json
+      working-directory: ./ProjectA
       shell: bash
 
     - name: Print manifest
       run: cat manifest.json;ls -al
+      working-directory: ./ProjectA
       shell: bash
     
     - name: Configure AWS credentials
@@ -48,9 +50,12 @@ jobs:
 
     - name: Build the Docker image
       run: docker build . --file ./Dockerfile/Dockerfile --tag ${{env.DOCKER_IMAGE_NAME}}:latest
+      working-directory: ./ProjectA
 
     - name: Tag the image
       run: docker tag ${{env.DOCKER_IMAGE_NAME}}:latest ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}:${{env.DOCKER_IMAGE_NAME}}-latest
+      working-directory: ./ProjectA
 
     - name: Push the image to ECR
       run: docker push ${{steps.login-ecr.outputs.registry}}/${{env.ECR_REPO}}:${{env.DOCKER_IMAGE_NAME}}-latest
+      working-directory: ./ProjectA

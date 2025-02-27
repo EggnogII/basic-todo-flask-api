@@ -1,4 +1,5 @@
-# basic-todo-flask-api
+# Project A
+## Flask Web API
 Run of the mill basic CRUD flask web app. It's a todo app
 
 ## Some basic info
@@ -7,6 +8,8 @@ Run of the mill basic CRUD flask web app. It's a todo app
 
 It features a Todo list that is not authenticated, meaning anybody who can connect and update and destroy records as they want. My requirements did not state authentication 
 was required for this one, (but another project) so I didn't bother. This is a bare bones app designed to test app deployment from a CI/CD framework to a cloud provider.
+
+The app design follows a similar methodology as Project B, (Routes, Models, DB, and in this case UI).
 
 ## Manifest
 
@@ -108,3 +111,14 @@ instance_type="db.r7i.large"
 subnet_id_b="subnet-***"
 subnet_id_c="subnet-***" 
 ```
+
+## Final Thoughts
+
+* This took the majority of my 3 day project, and the funny part is the app creation only took 3 hours for me. It was infrastructure setup (pipeline, containerization, and IaaC) that were the meat and potatoes of this effort.
+* Timeline ended up being the following:
+  * Day 1: Create the Application, Test Locally (3 hours), and setup Dockerfile (1 Hour).
+  * Day 2: Setup Pipeline for Docker Build (1 Hour), and IaaC to deploy RDS and ECS (3 Hours)
+  * Day 2 Extended: Troubleshoot connectivity and Healthcheck issues, test locally and redeploy. Several hours of whack a mole.
+  * Day 3: Clean up Terraform, and complete Project B (6 hours)
+
+* Overall win or lose, I feel like I've learned a lot in a crunch scenario like this. I found this experience valuable if not taxing on my computer chair posture.

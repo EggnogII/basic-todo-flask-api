@@ -184,3 +184,17 @@ terraform/ecs-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws
 terraform/ecs-for-adobe/config/dev.tfvars
 terraform/ecs-for-adobe/terraform.tfstate.backup
 terraform/ecs-for-adobe/.terraform.tfstate.lock.info
+terraform/rds-for-adobe/.terraform.tfstate.lock.info
+ProjectA/terraform/ecs-for-adobe/.terraform.lock.hcl
+ProjectA/terraform/ecs-for-adobe/terraform.tfstate
+ProjectA/terraform/ecs-for-adobe/terraform.tfstate.backup
+ProjectA/terraform/ecs-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws/5.88.0/windows_amd64/LICENSE.txt
+ProjectA/terraform/ecs-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws/5.88.0/windows_amd64/terraform-provider-aws_v5.88.0_x5.exe
+ProjectA/terraform/ecs-for-adobe/config/dev.tfvars
+ProjectA/terraform/rds-for-adobe/.terraform.lock.hcl
+ProjectA/terraform/rds-for-adobe/notes.txt
+ProjectA/terraform/rds-for-adobe/terraform.tfstate
+ProjectA/terraform/rds-for-adobe/terraform.tfstate.backup
+ProjectA/terraform/rds-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws/5.88.0/windows_amd64/LICENSE.txt
+ProjectA/terraform/rds-for-adobe/.terraform/providers/registry.terraform.io/hashicorp/aws/5.88.0/windows_amd64/terraform-provider-aws_v5.88.0_x5.exe
+ProjectA/terraform/rds-for-adobe/config/dev.tfvars
