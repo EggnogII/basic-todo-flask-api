@@ -1,6 +1,9 @@
 package main
 
 import (
+	"time"
+
+	"github.com/gin-contrib/timeout"
 	"github.com/gin-gonic/gin"
 	"www.example.com/rest-api-proj/db"
 	"www.example.com/rest-api-proj/routes"
@@ -8,15 +11,9 @@ import (
 
 func main() {
 	db.InitDB()
-	/*
 
-		var user models.User
-		user.ID = 0
-		user.Email = "test5@gmail.com"
-		user.Password = "password"
-		user.Save()
-	*/
 	server := gin.Default()
+	server.Use(timeout.New(timeout.WithTimeout(5 * time.Second)))
 	routes.RegisterRoutes(server)
 	server.Run(":8080")
 }
