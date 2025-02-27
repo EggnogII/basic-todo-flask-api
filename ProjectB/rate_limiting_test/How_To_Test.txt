@@ -1,0 +1,12 @@
+To test rate limiting on this application
+
+1) First run "go mod tidy" to install all dependencies
+
+2) Then in the main.go directory run "go run ." to start the server
+
+3) Install "hey": "go install github.com/rakyll/hey@latest"
+
+4) Run "hey -n 100 -c 10 http://<ENDPOINT>:8080/events
+
+Locally I yielded results where 90 of the 100 reponses were blocked with code "429" which indicates that rate limiting is working.
+
